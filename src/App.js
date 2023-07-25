@@ -1,5 +1,5 @@
 import './App.css';
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css'
 import Kanban from "./components/Kanban";
 import {fetchStatuses} from "./api/StatusesServeses";
@@ -36,9 +36,8 @@ function App() {
 
     //поиск! фильтруем и уравниваем по нижнему регистру затем сравниваем >>> task.name >>>> searchQuery>>
     const searchTasks = () => {
-        const newTasks = tasks.filter(task =>
-            task.name.toLowerCase().includes(searchQuery.toLowerCase()))
-        return newTasks;
+        return tasks.filter(task =>
+            task.name.toLowerCase().includes(searchQuery.toLowerCase()));
     }
     const searchedTasks = searchTasks();
 
