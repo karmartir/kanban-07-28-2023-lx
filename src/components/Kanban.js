@@ -11,7 +11,9 @@ const Kanban = ({
                     tasksError,
                     setOpenModal,
                     changePriority,
-                    changeStatus
+                    changeStatus,
+                    priorities,
+                    editTask
                 }) => {
     if (isStatusesLoader || isTasksLoader) return <Loader/>
     if (statusesError) return <h2>{statusesError}</h2>
@@ -32,6 +34,9 @@ const Kanban = ({
                             changePriority={changePriority}
                             changeStatus={changeStatus}
                             statuses={statuses}
+                            priorities={priorities}
+                            editTask={editTask}
+
                         />
                     )}
                 </div>

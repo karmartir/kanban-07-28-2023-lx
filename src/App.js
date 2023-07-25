@@ -19,7 +19,7 @@ function App() {
 
     const [tasks, setTasks] = useState([])
     const [statuses, setStatuses] = useState([])
-    console.log(statuses)
+
     const [openModal, setOpenModal] = useState(openModalInitialState)
 
 
@@ -60,6 +60,14 @@ function App() {
         }
     }
 
+    const editTask = async (id, updatedTask) => {
+        try {
+            await updateTask(id, updatedTask)
+            await getTasks();
+        } catch(err) {
+            alert('Task was not edited');
+        }
+    }
     const removeTask = async (id) => {
         try {
             await deleteTask(id)
@@ -86,7 +94,7 @@ function App() {
     return (
         <div className="App">
 
-                <h1 style={{backgroundColor: 'blue', color: 'white', padding: '15px'}}>K A N B A N</h1>
+            <h1 style={{backgroundColor: 'blue', color: 'white', padding: '15px'}}>K A N B A N</h1>
             <button type="button"
                     className="btn btn-secondary bg-warning m-3"
                     onClick={() => setOpenModal(
@@ -97,7 +105,7 @@ function App() {
                         }
                     )}
             >
-               <strong style={{color:'white'}}>CREATE NEW TASK</strong>
+                <strong style={{color: 'white'}}>CREATE NEW TASK</strong>
             </button>
 
             <Kanban
@@ -110,6 +118,8 @@ function App() {
                 setOpenModal={setOpenModal}
                 changePriority={changePriority}
                 changeStatus={changeStatus}
+                priorities={priorities}
+                editTask={editTask}
             />
 
             <MyModal

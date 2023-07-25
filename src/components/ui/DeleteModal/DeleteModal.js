@@ -26,7 +26,7 @@ const onDelete = () => {
             </div>
 
             <p style={{color: 'gray'}}>
-                <hr/> To confirm, type <br/> <strong> {openModal.data?.name}</strong> <br/> in the box below
+                To confirm, type <br/> <strong> {openModal.data?.name}</strong> <br/> in the box below
             </p>
 
             <input type="text"

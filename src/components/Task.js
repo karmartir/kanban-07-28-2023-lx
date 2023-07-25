@@ -1,14 +1,7 @@
 import React from 'react';
 import UpdateModal from "./UpdateModal";
 
-const Task = ({
-                  task,
-                  status,
-                  setOpenModal,
-                  changePriority,
-                  changeStatus,
-                  statuses
-              }) => {
+const Task = ({task, setOpenModal, changePriority, changeStatus, statuses, priorities, editTask}) => {
 
     const isPriorityLessThanOne = task.priority <= 1;
     const isPriorityGreaterThanTen = task.priority >= 10;
@@ -52,7 +45,12 @@ const Task = ({
 
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <UpdateModal/>
+                    <UpdateModal
+                        statuses={statuses}
+                        priorities={priorities}
+                        task={task}
+                        editTask={editTask}
+                    />
                     <button className="btn btn-outline-danger m-1"
                             onClick={() => setOpenModal({
                                 isOpen: true,

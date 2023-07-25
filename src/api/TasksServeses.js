@@ -2,23 +2,19 @@ import axios from "axios";
 const url = 'https://expressjs-server.vercel.app/tasks'
 
 export async function fetchTasks(){
-    const response = await axios.get(url)
-    return response
+    return await axios.get(url)
 }
 
 export async function postTask(newTask) {
-    const response = await axios.post(url, newTask)
-        return response
+   return await axios.post(url, newTask)
 }
 
 export async function deleteTask(id) {
     const taskUrl = `${url}/${id}`
-    const response = await axios.delete(taskUrl)
-    return response
+    return await axios.delete(taskUrl)
 }
 
 export const updateTask = async (id, updatedTask) => {
     const taskUrl = `${url}/${id}`
-    const response = await axios.patch( taskUrl, updatedTask)
-    return response
+    return await axios.patch( taskUrl, updatedTask)
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import classes from './MyModal.module.css'
 
 const MyModal = ({openModal, setOpenModal, children}) => {
- console.log(children)
     return (
         <div className={openModal.isOpen ? classes.modal + " " + classes.modal_active : classes.modal}
         onClick={() => setOpenModal({
