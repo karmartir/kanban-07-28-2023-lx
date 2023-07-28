@@ -1,5 +1,5 @@
 import './App.css';
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css'
 import Kanban from "./components/Kanban";
 import {fetchStatuses} from "./api/StatusesServeses";
@@ -8,6 +8,7 @@ import useFetching from "./hooks/useFetching";
 import MyModal from "./components/ui/Modal/MyModal";
 import CreateModal from "./components/CreateModal";
 import DeleteModal from "./components/ui/DeleteModal/DeleteModal";
+import {useSearch} from "./hooks/useSearch"
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
     const [statuses, setStatuses] = useState([])
 
     const [openModal, setOpenModal] = useState(openModalInitialState)
+    const [searchQuery, setSearchQuery] = useState('')
 
 
     const [getStatuses, isStatusesLoader, statusesError] = useFetching(async () => {
@@ -32,6 +34,9 @@ function App() {
         const res = await fetchTasks()
         setTasks(res.data)
     })
+
+
+const searchedTasks = useSearch(tasks, searchQuery)
 
 
     useEffect(() => {
@@ -64,7 +69,7 @@ function App() {
         try {
             await updateTask(id, updatedTask)
             await getTasks();
-        } catch(err) {
+        } catch (err) {
             alert('Task was not edited');
         }
     }
@@ -95,6 +100,8 @@ function App() {
         <div className="App">
 
             <h1 style={{backgroundColor: 'blue', color: 'white', padding: '15px'}}>K A N B A N</h1>
+
+
             <button type="button"
                     className="btn btn-secondary bg-warning m-3"
                     onClick={() => setOpenModal(
@@ -102,11 +109,17 @@ function App() {
                             isOpen: true,
                             mode: "create",
                             data: ''
-                        }
-                    )}
+                        })}
             >
                 <strong style={{color: 'white'}}>CREATE NEW TASK</strong>
             </button>
+
+            <input type="text"
+                   placeholder='find task'
+                   value={searchQuery}
+                   onChange={e => setSearchQuery(e.target.value)}
+            />
+
 
             <Kanban
                 isStatusesLoader={isStatusesLoader}
@@ -114,7 +127,7 @@ function App() {
                 statusesError={statusesError}
                 tasksError={tasksError}
                 statuses={statuses}
-                tasks={tasks}
+                tasks={searchedTasks}
                 setOpenModal={setOpenModal}
                 changePriority={changePriority}
                 changeStatus={changeStatus}
