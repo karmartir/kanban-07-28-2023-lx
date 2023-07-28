@@ -1,5 +1,5 @@
 import './App.css';
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css'
 import Kanban from "./components/Kanban";
 import {fetchStatuses} from "./api/StatusesServeses";
@@ -8,6 +8,7 @@ import useFetching from "./hooks/useFetching";
 import MyModal from "./components/ui/Modal/MyModal";
 import CreateModal from "./components/CreateModal";
 import DeleteModal from "./components/ui/DeleteModal/DeleteModal";
+import {useSearch} from "./hooks/useSearch"
 
 
 function App() {
@@ -34,13 +35,8 @@ function App() {
         setTasks(res.data)
     })
 
-    //поиск! фильтруем и уравниваем по нижнему регистру затем сравниваем >>> task.name >>>> searchQuery>>
-    const searchTasks = () => {
-        return tasks.filter(task =>
-            task.name.toLowerCase().includes(searchQuery.toLowerCase()));
-    }
-    const searchedTasks = searchTasks();
 
+const searchedTasks = useSearch(tasks, searchQuery)
 
 
     useEffect(() => {
